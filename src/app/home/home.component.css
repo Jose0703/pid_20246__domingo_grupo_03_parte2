@@ -1,0 +1,83 @@
+/* General styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+h1, h2 {
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    padding: 20px;
+    text-align: center;
+}
+
+/* Header styles */
+.header {
+    background-color: #1a2564fb;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.menu {
+    margin: 0;
+    padding: 0;
+}
+
+.menu ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.menu li {
+    margin-left: 20px;
+    padding: 7px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.invitacion{
+    background-color: gray;
+    border-radius: 10px;
+}
+
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .menu ul {
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .menu li {
+        margin: 10px 0;
+    }
+}
+
+.logout:hover{
+    background-color: rgb(129, 4, 4);
+    border-radius: 10px;
+}

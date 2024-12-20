@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Berru Clinica</title>
+    <link rel="stylesheet" href="proyecto.component.css">
+</head>
+<body>
+    <header class="header">
+        <a href="/home" style="text-decoration: none;"> <h1 style="color: white;" class="logo">Cibertec</h1></a>
+        <nav class="menu">
+            <ul>
+                <li><a href="/invitacion">Invitación</a></li>
+                <li class="proyecto"><a href="/proyecto">Proyecto</a></li>
+                <li><a href="/tarea">Tarea</a></li>
+                <li><a href="/usuario">Usuario</a></li>
+                <li class="logout" (click)="logout()">Cerrar Sesión</li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Invitación</h2>
+            <p>Seleccione un apartado del menú para comenzar.</p>
+        </section>
+
+        <div class="container">
+            <div class="row">
+              
+            </div>
+              <div class="row p-5">
+                  <div class="col-12">
+                      <div class="row section-banner">
+                          <div class="col-6">
+                              <h2>Listado de Proyectos</h2>
+                          </div>
+                          <div class="col-6 btn-agregar" style="text-align: right;">
+                              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalProyecto"
+                                  (click)="titulo('Crear', null)">
+                                  Nuevo Proyecto
+                              </button>
+                          </div>
+                      </div>
+                  </div>
+                  
+                  <div class="col-12">
+                    <br>
+                    <br>
+                      <table class="table">
+                          <thead>
+                              <tr>
+                                  <th scope="col">#</th>
+                                  <th scope="col">Nombre</th>
+                                  <th scope="col">Descripcion</th>
+                                  <th scope="col">Usuario</th>
+                                  <th scope="col">Editar</th>
+                                  <th scope="col">Eliminar</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let lista of listaProyectos; index as i">
+                                  <th scope="row">{{i+1}}</th>
+                                  <td>{{lista.nombre}}</td>
+                                  <td>{{lista.descripcion}}</td>
+                                  <td>{{lista.nombreUsuario}}</td>
+                                  <td>
+                                      <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                          data-bs-target="#modalProyecto" (click)="titulo('Editar', lista.id)">
+                                          Editar
+                                      </button>
+                                  </td>
+                                  <td>
+                                      <button class="btn btn-danger" (click)="eliminarProyectos(lista.id)">Eliminar</button>
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          
+              <!-- Modal -->
+              <form [formGroup]="formProyecto">
+                  <div class="modal fade" id="modalProyecto">
+                      <div class="modal-dialog modal-dialog-centered modal-lg">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                  <h5 class="modal-title">{{title}}</h5>
+                                  <button type="button" class="btn-close" (click)="cerrarBoton()"></button>
+                              </div>
+                              <div class="modal-body">
+                                  <div class="row">
+                                      <div class="col-6">
+                                          <div class="form-floating mb-3">
+                                              <input type="text" class="form-control" placeholder="Nombre"
+                                                  formControlName="nombre" required>
+                                              <label for="Nombre">Nombre</label>
+                                          </div>
+                                          <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" placeholder="Descripcion"
+                                                formControlName="descripcion" required>
+                                            <label for="Descripcion">Descripcion</label>
+                                        </div>
+                                      </div>
+        
+                                  </div>
+                              </div>
+                              <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" (click)="cerrarBoton()">Cerrar</button>
+                                  <button type="submit" class="btn btn-primary" (click)="crearEditarProyecto(nameBoton)">{{nameBoton}}</button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </form>
+          
+          </div>
+          
+    </main>
+</body>
+</html>
+
+
