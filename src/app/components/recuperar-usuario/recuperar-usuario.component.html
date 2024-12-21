@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="background-image: url('https://dondeestudiar.pe/wp-content/uploads/2024/01/cibertec-1024x576.jpg');">
+  <section class="vh-100 gradient-custom">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div class="card bg-dark text-white" style="border-radius: 1rem;">
+            <div class="card-body p-4 text-center">
+
+              <h2 class="fw-bold mb-4 text-uppercase">¿Olvidaste tu contraseña?</h2>
+              <p class="text-white-50 mb-4">
+                Ingresa tu correo electrónico y te enviaremos instrucciones para recuperar tu contraseña.
+              </p>
+
+              <form [formGroup]="formLogin" (ngSubmit)="login()">
+                <div class="mb-3" style="text-align: left;">
+                  <label for="email">Correo electrónico</label>
+                  <input type="email" id="email" class="form-control" formControlName="email" placeholder="Ingrese su correo">
+                </div>
+
+                <div class="text-center mt-4">
+                  <button type="submit" class="btn btn-outline-light btn-lg px-5">
+                    Enviar instrucciones
+                  </button>
+                </div>
+              </form>
+
+              <div class="mt-4">
+                <p class="mb-0">
+                  ¿Recuerdas tu contraseña? 
+                  <a href="/login" class="text-white-50 fw-bold">Inicia sesión</a>
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
