@@ -22,8 +22,8 @@ export class TareaService {
       return this.http.get(`${this.tarea}/${id}`);
     }
   
-    registrarTarea(request: any, idTarea: number): Observable<any> {
-      return this.http.post(`${this.tarea}?id_tarea=${idTarea}`, request);
+    registrarTarea(request: any): Observable<any> {
+      return this.http.post(`${this.tarea}/tarea`, request);
     }
     
   

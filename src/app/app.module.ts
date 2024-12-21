@@ -10,7 +10,6 @@ import { AuthInterceptor } from './components/helpers/auth.interceptor';
 import { AuthGuard } from './components/helpers/auth.guard';
 import { HomeComponent } from './home/home.component';
 import { UsuarioComponent } from './components/usuario/usuario.component';
-import { RecuperarUsuarioComponent } from './components/recuperar-usuario/recuperar-usuario.component';
 import { TareasComponent } from './components/views/tareas/tareas.component';
 import { InvitacionComponent } from './components/invitacion/invitacion.component';
 import { TareaComponent } from './components/tarea/tarea.component';
@@ -21,7 +20,6 @@ import { ProyectoComponent } from './components/proyecto/proyecto.component';
     LoginComponent,
     HomeComponent,
     UsuarioComponent,
-    RecuperarUsuarioComponent,
     TareasComponent,
     InvitacionComponent,
     ProyectoComponent,
@@ -40,7 +38,6 @@ import { ProyectoComponent } from './components/proyecto/proyecto.component';
       {path: 'proyecto', component: ProyectoComponent, canActivate: [AuthGuard]},
       {path: 'tarea', component : TareaComponent},
       {path: 'usuario', component: UsuarioComponent},
-      {path: 'recuperar', component: RecuperarUsuarioComponent},
       
       {path: '', component: LoginComponent},
     ]),

@@ -37,7 +37,7 @@
                           <div class="col-6 btn-agregar" style="text-align: right;">
                               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTarea"
                                   (click)="titulo('Crear', null)">
-                                  Nuevo Proyecto
+                                  Nueva Tarea
                               </button>
                           </div>
                       </div>
@@ -66,7 +66,7 @@
                                   <th scope="row">{{i+1}}</th>
                                   <td>{{lista.nombre}}</td>
                                   <td>{{lista.descripcion}}</td>
-                                  <td>{{lista.fecVen}}</td>
+                                  <td>{{lista.fechaVencimiento}}</td>
                                   <td>{{lista.desarrollado}}</td>
                                   <td>{{lista.prioridad}}</td>
                                   <td>{{lista.comentarios}}</td>
@@ -74,12 +74,12 @@
                                   <td>{{lista.usuario}}</td>
                                   <td>
                                       <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                          data-bs-target="#modalTarea" (click)="titulo('Editar', lista.id)">
+                                          data-bs-target="#modalTarea" (click)="titulo('Editar', lista.id_tarea)">
                                           Editar
                                       </button>
                                   </td>
                                   <td>
-                                      <button class="btn btn-danger" (click)="eliminarTarea(lista.id)">Eliminar</button>
+                                      <button class="btn btn-danger" (click)="eliminarTarea(lista.id_tarea)">Eliminar</button>
                                   </td>
                               </tr>
                           </tbody>
@@ -112,8 +112,8 @@
 
                                         <div class="form-floating mb-3">
                                             <input type="text" class="form-control" placeholder="Fecha de Vencimiento"
-                                                formControlName="fecVen" required>
-                                            <label for="fecVen">Fecha de Vencimiento</label>
+                                                formControlName="fechaVencimiento" required>
+                                            <label for="fechaVencimiento">Fecha de Vencimiento</label>
                                         </div>
                                         <div class="form-floating mb-3">
                                             <input type="text" class="form-control" placeholder="Desarrollado"
@@ -126,11 +126,7 @@
                                           <label for="prioridad">Prioridad</label>
                                       </div>
 
-                                      <div class="form-floating mb-3">
-                                          <input type="text" class="form-control" placeholder="Comentarios"
-                                              formControlName="comentarios" required>
-                                          <label for="comentarios">Comentarios</label>
-                                      </div>
+
                                       <div class="form-floating mb-3">
                                         <input type="text" class="form-control" placeholder="Proyecto"
                                             formControlName="proyecto" required>
