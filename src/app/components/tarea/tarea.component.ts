@@ -94,68 +94,78 @@ export class TareaComponent implements OnInit {
       });
   }
   
-    eliminarTarea(id: any) {
-        Swal.fire({
-          title: '¿Estás seguro de eliminar este proyecto?',
-          icon: 'error',
-          showCancelButton: true,
-          confirmButtonText: 'Sí, eliminar',
-          cancelButtonText: 'Cancelar'
-        }).then((result) => {
-          if (result.isConfirmed) {
-    
+  eliminarTarea(id: any) {
+    Swal.fire({
+        title: '¿Estás seguro de eliminar esta tarea?',
+        icon: 'error',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
             this._tareaService.eliminarTarea(id)
-              .subscribe((data) => {
-                console.log("Tarea eliminada", data)
-                this.listaTarea = this.listaTarea.filter(item => item.id !== id);
-              }, error => {
-                console.error('Error al eliminar', error);
-              });
-    
-              this.alertaExitosa("eliminada")
-    
-          }
-        });
-    
-      }
+                .subscribe(
+                    (data) => {
+                        console.log("Tarea eliminada", data);
 
-      registrarTarea(formulario: any): void {
-        if (this.formTarea.valid) {
-          const idUsuario = this._loginService.getIdUsuario(); // Obtener idUsuario dinámicamente
-      
-          // Crear el objeto request con los datos del formulario
-          const request = {
-            nombre: formulario.value.nombre,
-            descripcion: formulario.value.descripcion,
-            fechaVencimiento: formulario.value.fechaVencimiento,
-            desarrollado: formulario.value.desarrollado,
-            prioridad: formulario.value.prioridad,
-            proyecto: {
-              idProyecto: formulario.value.proyecto, // Asegúrate de que `formulario.value.proyecto` contenga un ID
-            },
-            asignadoA: {
-              id: idUsuario, // Enviar el ID del usuario asignado
-            },
-          };
-      
-          // Llamar al servicio con el objeto request
-          this._tareaService.registrarTarea(request).subscribe(
-            (response) => {
-              console.log('Tarea registrada', response);
-              this.cerrarModal();
-              this.obtenerTarea();
-              this.resetForm();
-            },
-            (error) => {
-              console.error('Error al registrar', error);
-              alert('Error al registrar el proyecto');
-            }
-          );
-        } else {
-          console.warn('Formulario inválido');
+                        // Filtra la tarea eliminada correctamente
+                        this.listaTarea = this.listaTarea.filter(item => item.id_tarea !== id);
+
+                        // Muestra la alerta de éxito
+                        this.alertaExitosa("eliminada");
+                    },
+                    error => {
+                        console.error('Error al eliminar', error);
+                    }
+                );
         }
+    });
+}
+
+
+registrarTarea(): void {
+  if (this.formTarea.valid) {
+    const idUsuario = this._loginService.getIdUsuario(); // Obtener idUsuario dinámicamente
+
+    // Crear el objeto request con los datos del formulario
+    const request = {
+      nombre: this.formTarea.value.nombre,
+      descripcion: this.formTarea.value.descripcion,
+      fechaVencimiento: this.formTarea.value.fechaVencimiento,
+      desarrollado: this.formTarea.value.desarrollado,
+      prioridad: this.formTarea.value.prioridad,
+      proyecto: {
+        idProyecto: this.formTarea.value.proyecto, // Asegúrate de que `proyecto` sea un ID válido
+      },
+      asignadoA: {
+        id: idUsuario, // Enviar el ID del usuario asignado
+      },
+    };
+
+    // Llamar al servicio con el objeto request
+    this._tareaService.registrarTarea(request).subscribe(
+      (response) => {
+        console.log('Tarea registrada', response);
+        this.cerrarModal(); // Cerrar el modal después de registrar
+        this.obtenerTarea(); // Recargar la lista de tareas
+        this.formTarea.reset(); // Resetear el formulario
+      },
+      (error) => {
+        console.error('Error al registrar', error);
+        let errorMessage = 'Error al registrar la tarea. Inténtalo de nuevo.';
+        if (error.error && error.error.message) {
+          errorMessage = error.error.message; // Mostrar el mensaje de error del backend si está disponible
+        }
+        alert(errorMessage); // Mostrar el mensaje de error
       }
+    );
+  } else {
+    alert('Por favor, completa todos los campos del formulario antes de enviar.'); // Si el formulario no es válido
+  }
+}
+
       
+
           
           
         
@@ -214,7 +224,7 @@ export class TareaComponent implements OnInit {
                   cancelButtonText: 'Cancelar'
                 }).then((result) => {
                   if (result.isConfirmed) {
-                    this.registrarTarea(this.formTarea.value)
+                    this.registrarTarea()
                     this.alertaExitosa("registrada")
                   }
                 });
@@ -264,4 +274,6 @@ export class TareaComponent implements OnInit {
       });
 
   }
+
+  
 }

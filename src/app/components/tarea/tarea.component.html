@@ -35,10 +35,11 @@
                               <h2>Listado de Tareas</h2>
                           </div>
                           <div class="col-6 btn-agregar" style="text-align: right;">
-                              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTarea"
-                                  (click)="titulo('Crear', null)">
-                                  Nueva Tarea
-                              </button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTarea" 
+                            (click)="titulo('Crear', null); resetForm()">
+                      Nueva Tarea
+                            </button>
+                    
                           </div>
                       </div>
                   </div>
@@ -54,7 +55,7 @@
                                   <th scope="col">Fecha de Vencimiento</th>
                                   <th scope="col">Desarrollado</th>
                                   <th scope="col">Prioridad</th>
-                                  <th scope="col">Comentarios</th>
+                                  <th scope="col"></th>
                                   <th scope="col">Proyecto</th>
                                   <th scope="col">Usuario</th>
                                   <th scope="col">Editar</th>
@@ -69,7 +70,6 @@
                                   <td>{{lista.fechaVencimiento}}</td>
                                   <td>{{lista.desarrollado}}</td>
                                   <td>{{lista.prioridad}}</td>
-                                  <td>{{lista.comentarios}}</td>
                                   <td>{{lista.proyecto}}</td>
                                   <td>{{lista.usuario}}</td>
                                   <td>
@@ -101,39 +101,39 @@
                                       <div class="col-6">
                                           <div class="form-floating mb-3">
                                               <input type="text" class="form-control" placeholder="Nombre"
-                                                  formControlName="nombre" required>
+                                                  formControlName="nombre" value="nombre" required>
                                               <label for="nombre">nombre</label>
                                           </div>
                                           <div class="form-floating mb-3">
-                                            <input type="text" class="form-control" placeholder="Descripcion"
+                                            <input type="text" class="form-control" value="descripcion" placeholder="Descripcion"
                                                 formControlName="descripcion" required>
                                             <label for="descripcion">Descripcion</label>
                                         </div>
 
                                         <div class="form-floating mb-3">
                                             <input type="text" class="form-control" placeholder="Fecha de Vencimiento"
-                                                formControlName="fechaVencimiento" required>
+                                                formControlName="fechaVencimiento" value="fechaVencimiento"  required >
                                             <label for="fechaVencimiento">Fecha de Vencimiento</label>
                                         </div>
                                         <div class="form-floating mb-3">
-                                            <input type="text" class="form-control" placeholder="Desarrollado"
+                                            <input type="text" class="form-control" value="desarrollado" placeholder="Desarrollado"
                                                 formControlName="desarrollado" required>
                                             <label for="desarrollado">Desarrollado</label>
                                         </div>
                                         <div class="form-floating mb-3">
-                                          <input type="text" class="form-control" placeholder="Prioridad"
+                                          <input type="text" class="form-control" value="prioridad" placeholder="Prioridad"
                                               formControlName="prioridad" required>
                                           <label for="prioridad">Prioridad</label>
                                       </div>
 
 
                                       <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" placeholder="Proyecto"
+                                        <input type="text" class="form-control" value="proyecto" placeholder="Proyecto"
                                             formControlName="proyecto" required>
                                         <label for="proyecto">Proyecto</label>
                                     </div>
                                     <div class="form-floating mb-3">
-                                      <input type="text" class="form-control" placeholder="Usuario"
+                                      <input type="text" class="form-control" value="id" placeholder="Usuario"
                                           formControlName="usuario" required>
                                       <label for="usuario">Usuario</label>
                                   </div>
@@ -143,8 +143,8 @@
                               </div>
                               <div class="modal-footer">
                                   <button type="button" class="btn btn-secondary" (click)="cerrarBoton()">Cerrar</button>
-                                  <button type="submit" class="btn btn-primary" (click)="crearEditarTarea(nameBoton)">{{nameBoton}}</button>
-                              </div>
+                                  <button type="submit" class="btn btn-primary" (click)="registrarTarea()">Guardar</button>
+                                </div>
                           </div>
                       </div>
                   </div>

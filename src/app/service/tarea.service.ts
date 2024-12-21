@@ -9,30 +9,27 @@ import { environment } from 'src/environments/environment';
 export class TareaService {
 
   private baseUrl = environment.apiUrl;
-  
-    private tarea: string = `${this.baseUrl}/tarea`;
-  
-    constructor(private http: HttpClient) { }
-  
-    listarTarea(): Observable<any>{
-      return this.http.get(`${this.tarea}`);
-    }
-  
-    obtenerTarea(id: number): Observable<any>{
-      return this.http.get(`${this.tarea}/${id}`);
-    }
-  
-    registrarTarea(request: any): Observable<any> {
-      return this.http.post(`${this.tarea}/tarea`, request);
-    }
-    
-  
-    editarTarea(id: number, request: any): Observable<any>{
-      return this.http.put(`${this.tarea}/${id}`, request);
-    }
-  
-    eliminarTarea(id: number): Observable<any>{
-      return this.http.delete(`${this.tarea}/${id}`);
-    }
-  
+  private tareaUrl = `${this.baseUrl}/tarea`;  // Solo una URL
+
+  constructor(private http: HttpClient) { }
+
+  listarTarea(): Observable<any> {
+    return this.http.get(this.tareaUrl);  // Usamos tareaUrl directamente
+  }
+
+  obtenerTarea(id: number): Observable<any> {
+    return this.http.get(`${this.tareaUrl}/${id}`);
+  }
+
+  registrarTarea(request: any): Observable<any> {
+    return this.http.post(this.tareaUrl, request);  // Corrige la URL para registrar
+  }
+
+  editarTarea(id: number, request: any): Observable<any> {
+    return this.http.put(`${this.tareaUrl}/${id}`, request);
+  }
+
+  eliminarTarea(id: number): Observable<any> {
+    return this.http.delete(`${this.tareaUrl}/${id}`);
+  }
 }
