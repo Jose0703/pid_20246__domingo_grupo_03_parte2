@@ -100,7 +100,7 @@ export class ProyectoComponent implements OnInit {
   
     }
   
-    registrarProyeto(formulario: any): void {
+    registrarProyecto(formulario: any): void {
       if (this.formProyecto.valid) {
         const idUsuario = this._loginService.getIdUsuario(); // Obtener idUsuario dinámicamente
     
@@ -185,7 +185,7 @@ export class ProyectoComponent implements OnInit {
             cancelButtonText: 'Cancelar'
           }).then((result) => {
             if (result.isConfirmed) {
-              this.registrarProyeto(this.formProyecto.value)
+              this.registrarProyecto(this.formProyecto.value)
               this.alertaExitosa("registrado")
             }
           });
