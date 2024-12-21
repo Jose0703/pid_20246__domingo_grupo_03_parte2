@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cibertec</title>
+    <link rel="stylesheet" href="tarea.component.css">
+</head>
+<body>
+    <header class="header">
+        <a href="/home" style="text-decoration: none;"> <h1 style="color: white;" class="logo">Cibertec</h1></a>
+        <nav class="menu">
+            <ul>
+                <li><a href="/invitacion">Invitación</a></li>
+                <li><a href="/proyecto">Proyecto</a></li>
+                <li class="tarea"><a href="/tarea">Tarea</a></li>
+                <li><a href="/usuario">Usuario</a></li>
+                <li class="logout" (click)="logout()">Cerrar Sesión</li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Invitación</h2>
+            <p>Seleccione un apartado del menú para comenzar.</p>
+        </section>
+        <div class="container">
+            <div class="row">
+              
+            </div>
+              <div class="row p-5">
+                  <div class="col-12">
+                      <div class="row section-banner">
+                          <div class="col-6">
+                              <h2>Listado de Tareas</h2>
+                          </div>
+                          <div class="col-6 btn-agregar" style="text-align: right;">
+                              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTarea"
+                                  (click)="titulo('Crear', null)">
+                                  Nueva Tarea
+                              </button>
+                          </div>
+                      </div>
+                  </div>
+                  
+                  <div class="col-12">
+                    <br>
+                      <table class="table">
+                          <thead>
+                              <tr>
+                                  <th scope="col">#</th>
+                                  <th scope="col">Nombre</th>
+                                  <th scope="col">Descripcion</th>
+                                  <th scope="col">Fecha de Vencimiento</th>
+                                  <th scope="col">Desarrollado</th>
+                                  <th scope="col">Prioridad</th>
+                                  <th scope="col">Comentarios</th>
+                                  <th scope="col">Proyecto</th>
+                                  <th scope="col">Usuario</th>
+                                  <th scope="col">Editar</th>
+                                  <th scope="col">Eliminar</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let lista of listaTarea; index as i">
+                                  <th scope="row">{{i+1}}</th>
+                                  <td>{{lista.nombre}}</td>
+                                  <td>{{lista.descripcion}}</td>
+                                  <td>{{lista.fechaVencimiento}}</td>
+                                  <td>{{lista.desarrollado}}</td>
+                                  <td>{{lista.prioridad}}</td>
+                                  <td>{{lista.comentarios}}</td>
+                                  <td>{{lista.proyecto}}</td>
+                                  <td>{{lista.usuario}}</td>
+                                  <td>
+                                      <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                          data-bs-target="#modalTarea" (click)="titulo('Editar', lista.id_tarea)">
+                                          Editar
+                                      </button>
+                                  </td>
+                                  <td>
+                                      <button class="btn btn-danger" (click)="eliminarTarea(lista.id_tarea)">Eliminar</button>
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          
+              <!-- Modal -->
+              <form [formGroup]="formTarea">
+                  <div class="modal fade" id="modalTarea">
+                      <div class="modal-dialog modal-dialog-centered modal-lg">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                  <h5 class="modal-title">{{title}}</h5>
+                                  <button type="button" class="btn-close" (click)="cerrarBoton()"></button>
+                              </div>
+                              <div class="modal-body">
+                                  <div class="row">
+                                      <div class="col-6">
+                                          <div class="form-floating mb-3">
+                                              <input type="text" class="form-control" placeholder="Nombre"
+                                                  formControlName="nombre" required>
+                                              <label for="nombre">nombre</label>
+                                          </div>
+                                          <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" placeholder="Descripcion"
+                                                formControlName="descripcion" required>
+                                            <label for="descripcion">Descripcion</label>
+                                        </div>
+
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" placeholder="Fecha de Vencimiento"
+                                                formControlName="fechaVencimiento" required>
+                                            <label for="fechaVencimiento">Fecha de Vencimiento</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" placeholder="Desarrollado"
+                                                formControlName="desarrollado" required>
+                                            <label for="desarrollado">Desarrollado</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                          <input type="text" class="form-control" placeholder="Prioridad"
+                                              formControlName="prioridad" required>
+                                          <label for="prioridad">Prioridad</label>
+                                      </div>
+
+
+                                      <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" placeholder="Proyecto"
+                                            formControlName="proyecto" required>
+                                        <label for="proyecto">Proyecto</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                      <input type="text" class="form-control" placeholder="Usuario"
+                                          formControlName="usuario" required>
+                                      <label for="usuario">Usuario</label>
+                                  </div>
+                                    </div>
+        
+                                  </div>
+                              </div>
+                              <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" (click)="cerrarBoton()">Cerrar</button>
+                                  <button type="submit" class="btn btn-primary" (click)="crearEditarTarea(nameBoton)">{{nameBoton}}</button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </form>
+          
+          </div>
+          
+    </main>
+</body>
+</html>

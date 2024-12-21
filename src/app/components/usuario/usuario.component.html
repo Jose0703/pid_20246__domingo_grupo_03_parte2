@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cibertec</title>
+    <link rel="stylesheet" href="usuario.component.css">
+</head>
+<body>
+    <header class="header">
+        <a href="/home" style="text-decoration: none;"> <h1 style="color: white;" class="logo">Cibertec</h1></a>
+        <nav class="menu">
+            <ul>
+                <li><a href="/invitacion">Invitación</a></li>
+                <li><a href="/proyecto">Proyecto</a></li>
+                <li><a href="/tarea">Tarea</a></li>
+                <li  class="usuario"><a href="/usuario">Usuario</a></li>
+                <li class="logout" (click)="logout()">Cerrar Sesión</li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Invitación</h2>
+            <p>Seleccione un apartado del menú para comenzar.</p>
+        </section>
+    </main>
+</body>
+</html>
