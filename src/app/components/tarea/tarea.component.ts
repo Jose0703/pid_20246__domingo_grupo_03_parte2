@@ -35,7 +35,7 @@ export class TareaComponent implements OnInit {
     this.formTarea = new FormGroup({
       nombre: new FormControl(null, [Validators.required]),
       descripcion: new FormControl(null, [Validators.required]),
-      fecVen: new FormControl(null, [Validators.required]),
+      fechaVencimiento: new FormControl(null, [Validators.required]),
       desarrollado: new FormControl(null, [Validators.required]),
       prioridad: new FormControl(null, [Validators.required]),
       comentarios: new FormControl(null, [Validators.required]),
@@ -49,14 +49,20 @@ export class TareaComponent implements OnInit {
       (data) => {
         console.log("Datos recibidos desde la API:", data);
   
-        // Asegúrate de acceder a la clave correcta
-        if (data && data.Tarea) {
-          this.listaTarea = data.Tarea.map(tarea => ({
-            ...tarea,
-            proyecto: tarea.proyecto || 'Sin tarea asignada'
+        if (data) {
+          this.listaTarea = data.map((tarea: any) => ({
+            id_tarea: tarea.id_tarea,
+            nombre: tarea.nombre,
+            descripcion: tarea.descripcion,
+            fechaVencimiento: this.formatDate(tarea.fechaVencimiento),
+            desarrollado: tarea.desarrollado,
+            prioridad: tarea.prioridad,
+            comentarios: Array.isArray(tarea.comentarios) ? tarea.comentarios : ['Sin comentarios'],
+            proyecto: tarea.proyecto ? tarea.proyecto.nombre : 'Sin proyecto asignado',
+            usuario: tarea.proyecto?.usuario ? `${tarea.proyecto.usuario.nombre} ${tarea.proyecto.usuario.apellido}` : 'Sin usuario asignado',
           }));
         } else {
-          console.error("La API no devolvió los proyectos correctamente");
+          console.error("Error al procesar los datos.");
           this.listaTarea = [];
         }
       },
@@ -67,97 +73,114 @@ export class TareaComponent implements OnInit {
     );
   }
   
+  formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
 
-
-    obtenerTareaPorId(id: any) {
-      let form = this.formTarea
-      this._tareaService.obtenerTarea(id)
-        .subscribe((data) => {
-          form.controls['nombre'].setValue(data.tarea.nombre)
-          form.controls['descripcion'].setValue(data.tarea.descripcion)
-          form.controls['fecVen'].setValue(data.tarea.fecVen)
-          form.controls['desarrollado'].setValue(data.tarea.desarrollado)
-          form.controls['prioridad'].setValue(data.tarea.prioridad)
-          form.controls['comentarios'].setValue(data.tarea.comentarios)
-          form.controls['proyecto'].setValue(data.tarea.proyecto)
-          form.controls['usuario'].setValue(data.tarea.usuario)
-          console.log(data.tarea)
-        });
-    }
+  obtenerTareaPorId(id: any) {
+    let form = this.formTarea
+    this._tareaService.obtenerTarea(id)
+      .subscribe((data) => {
+        form.controls['nombre'].setValue(data.tareas.nombre)
+        form.controls['descripcion'].setValue(data.tareas.descripcion)
+        form.controls['fechaVencimiento'].setValue(data.tareas.fechaVencimiento)
+        form.controls['desarrollado'].setValue(data.tareas.desarrollado)
+        form.controls['prioridad'].setValue(data.tareas.prioridad)
+        form.controls['comentarios'].setValue(data.tareas.comentarios)
+        form.controls['proyecto'].setValue(data.tareas.proyecto)
+        form.controls['usuario'].setValue(data.tareas.usuario)
+        console.log(data.tarea)
+      });
+  }
   
-    eliminarTarea(id: any) {
-        Swal.fire({
-          title: '¿Estás seguro de eliminar este proyecto?',
-          icon: 'error',
-          showCancelButton: true,
-          confirmButtonText: 'Sí, eliminar',
-          cancelButtonText: 'Cancelar'
-        }).then((result) => {
-          if (result.isConfirmed) {
-    
+  eliminarTarea(id: any) {
+    Swal.fire({
+        title: '¿Estás seguro de eliminar esta tarea?',
+        icon: 'error',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
             this._tareaService.eliminarTarea(id)
-              .subscribe((data) => {
-                console.log("Tarea eliminada", data)
-                this.listaTarea = this.listaTarea.filter(item => item.id !== id);
-              }, error => {
-                console.error('Error al eliminar', error);
-              });
-    
-              this.alertaExitosa("eliminada")
-    
-          }
-        });
-    
-      }
+                .subscribe(
+                    (data) => {
+                        console.log("Tarea eliminada", data);
 
-      registrarTarea(formulario: any): void {
-            if (this.formTarea.valid) {
-              const idTarea = this._loginService.getIdUsuario(); // Obtener idUsuario dinámicamente
-          
-              // Crear el objeto request con los datos del formulario
-              const request = {
-                nombre: formulario.value.nombre,
-                descripcion: formulario.value.descripcion,
-                fecVen: formulario.value.fecVen,
-                desarrollado: formulario.value.desarrollado,
-                prioridad: formulario.value.prioridad,
-                comentarios: formulario.value.comentarios,
-                proyecto: formulario.value.proyecto,
-                usuario: formulario.value.usuario,
-              };
-          
-              // Llamar al servicio con el id_usuario
-              this._tareaService.registrarTarea(request, idTarea).subscribe(
-                (response) => {
-                  console.log('Tarea registrad', response);
-                  this.cerrarModal();
-                  this.obtenerTarea();
-                  this.resetForm();
-                },
-                (error) => {
-                  console.error('Error al registrar', error);
-                  alert('Error al registrar el proyecto');
-                }
-              );
-            } else {
-              console.warn('Formulario inválido');
-            }
-          }
+                        // Filtra la tarea eliminada correctamente
+                        this.listaTarea = this.listaTarea.filter(item => item.id_tarea !== id);
+
+                        // Muestra la alerta de éxito
+                        this.alertaExitosa("eliminada");
+                    },
+                    error => {
+                        console.error('Error al eliminar', error);
+                    }
+                );
+        }
+    });
+}
+
+
+registrarTarea(): void {
+  if (this.formTarea.valid) {
+    const idUsuario = this._loginService.getIdUsuario(); // Obtener idUsuario dinámicamente
+
+    // Crear el objeto request con los datos del formulario
+    const request = {
+      nombre: this.formTarea.value.nombre,
+      descripcion: this.formTarea.value.descripcion,
+      fechaVencimiento: this.formTarea.value.fechaVencimiento,
+      desarrollado: this.formTarea.value.desarrollado,
+      prioridad: this.formTarea.value.prioridad,
+      proyecto: {
+        idProyecto: this.formTarea.value.proyecto, // Asegúrate de que `proyecto` sea un ID válido
+      },
+      asignadoA: {
+        id: idUsuario, // Enviar el ID del usuario asignado
+      },
+    };
+
+    // Llamar al servicio con el objeto request
+    this._tareaService.registrarTarea(request).subscribe(
+      (response) => {
+        console.log('Tarea registrada', response);
+        this.cerrarModal(); // Cerrar el modal después de registrar
+        this.obtenerTarea(); // Recargar la lista de tareas
+        this.formTarea.reset(); // Resetear el formulario
+      },
+      (error) => {
+        console.error('Error al registrar', error);
+        let errorMessage = 'Error al registrar la tarea. Inténtalo de nuevo.';
+        if (error.error && error.error.message) {
+          errorMessage = error.error.message; // Mostrar el mensaje de error del backend si está disponible
+        }
+        alert(errorMessage); // Mostrar el mensaje de error
+      }
+    );
+  } else {
+    alert('Por favor, completa todos los campos del formulario antes de enviar.'); // Si el formulario no es válido
+  }
+}
+
+      
+
           
           
         
-          editarTarea(id: number, formulario: any): void {
-            if (this.formTarea.valid) {
-              this._tareaService.editarTarea(id, formulario).subscribe(response => {
-                this.cerrarModal()
-                this.obtenerTarea()
-                this.resetForm()
-                console.log('Proyecto modificado', response);
-              }, error => {
-                console.error('Error al modificar', error);
-              });
-            }
-          }
+      editarTarea(id: number, formulario: any): void {
+        if (this.formTarea.valid) {
+          this._tareaService.editarTarea(id, formulario).subscribe(response => {
+            this.cerrarModal()
+            this.obtenerTarea()
+            this.resetForm()
+            console.log('Proyecto modificado', response);
+          }, error => {
+            console.error('Error al modificar', error);
+          });
+        }
+      }
       
           titulo(titulo: any, id: number) {
             this.title = `${titulo} tarea`
@@ -201,7 +224,7 @@ export class TareaComponent implements OnInit {
                   cancelButtonText: 'Cancelar'
                 }).then((result) => {
                   if (result.isConfirmed) {
-                    this.registrarTarea(this.formTarea.value)
+                    this.registrarTarea()
                     this.alertaExitosa("registrada")
                   }
                 });
@@ -251,4 +274,6 @@ export class TareaComponent implements OnInit {
       });
 
   }
+
+  
 }
