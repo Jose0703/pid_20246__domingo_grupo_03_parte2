@@ -42,17 +42,20 @@ export class InvitacionComponent implements OnInit {
 
   obtenerInvitaciones() {
     this._invitacionservice.listarInvitacion().subscribe(
-      (data) => {
-        console.log("Datos recibidos desde la API:", data);
+      (response) => {
+        console.log("Datos recibidos desde la API:", response);
   
-        // Asegúrate de acceder a la clave correcta
-        if (data && data.Invitaciones) {
-          this.listaInvitaciones = data.Invitaciones.map(invitacion => ({
-            ...invitacion,
-            usuario: invitacion.usuario || 'Sin usuario asignado'
+        // Verifica si la respuesta contiene las invitaciones en una propiedad específica
+        if (response && Array.isArray(response.invitaciones)) {
+          this.listaInvitaciones = response.invitaciones.map((invitacion: any) => ({
+            id_invitacion: invitacion.id_invitacion,
+            proyecto: invitacion.proyecto ? invitacion.proyecto.nombre : 'Sin proyecto asignado',
+            usuario: invitacion.usuario ? `${invitacion.usuario.nombre} ${invitacion.usuario.apellido}` : 'Sin usuario asignado',
+            mensaje: invitacion.mensaje || 'Sin mensaje',
+            fecha: this.formatDate(invitacion.fecha || new Date().toISOString()),
           }));
         } else {
-          console.error("La API no devolvió los proyectos correctamente");
+          console.error("La API no devolvió un arreglo de invitaciones.");
           this.listaInvitaciones = [];
         }
       },
@@ -62,7 +65,15 @@ export class InvitacionComponent implements OnInit {
       }
     );
   }
+
   
+  
+
+    formatDate(dateString: string): string {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
+    }
+
   
 
   obtenerInvitacionPorId(id: any) {

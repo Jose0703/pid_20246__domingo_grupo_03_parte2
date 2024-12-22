@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berru Clinica</title>
+    <title>Cibertec</title>
     <link rel="stylesheet" href="home.component.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
 </head>
 <body>
     <header class="header">
@@ -15,15 +20,42 @@
                 <li><a href="/proyecto">Proyecto</a></li>
                 <li><a href="/tarea">Tarea</a></li>
                 <li><a href="/usuario">Usuario</a></li>
-                <li><a href="/login">Cerrar Sesión</a></li>
+                <li><a href="/login" class="logout">Cerrar Sesión</a></li>
             </ul>
         </nav>
     </header>
     <main>
-        <section>
+        <!-- Hero Section -->
+        <section class="hero">
             <h2>Bienvenido</h2>
-            <p>Seleccione un apartado del menú para comenzar.</p>
         </section>
+        <br>
+        <!-- Call-to-action Button -->
+        <div class="button-container">
+            <button class="cta-button">Explorar más</button>
+        </div>
+        <br>
+        <br>
+
+        <!-- Cards Section -->
+        <section class="cards-container">
+            <div class="card">
+                <h3>Servicios</h3>
+                <p>Ofrecemos atención de calidad para ti.</p>
+            </div>
+            <div class="card">
+                <h3>Equipo</h3>
+                <p>Conoce a los expertos que están aquí para ayudarte.</p>
+            </div>
+            <div class="card">
+                <h3>Ubicación</h3>
+                <p>Visítanos en nuestra sede central.</p>
+            </div>
+
+        
+        </section>
+
+        
     </main>
 </body>
 </html>

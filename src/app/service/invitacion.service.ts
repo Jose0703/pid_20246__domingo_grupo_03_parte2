@@ -10,29 +10,29 @@ export class InvitacionService {
 
   private baseUrl = environment.apiUrl;
 
-  private invitaciones: string = `${this.baseUrl}/invitacion`;
+  private invitacionUrl = `${this.baseUrl}/invitacion`;  // Solo una URL
 
   constructor(private http: HttpClient) { }
 
   listarInvitacion(): Observable<any>{
-    return this.http.get(`${this.invitaciones}`);
+    return this.http.get(`${this.invitacionUrl}`);
   }
 
   obtenerInvitacion(id: number): Observable<any>{
-    return this.http.get(`${this.invitaciones}/${id}`);
+    return this.http.get(`${this.invitacionUrl}/${id}`);
   }
 
   registrarInvitacion(request: any, idInvitacion: number): Observable<any> {
-    return this.http.post(`${this.invitaciones}?id_invitacion=${idInvitacion}`, request);
+    return this.http.post(`${this.invitacionUrl}?id_invitacion=${idInvitacion}`, request);
   }
   
 
   editarInvitacion(id: number, request: any): Observable<any>{
-    return this.http.put(`${this.invitaciones}/${id}`, request);
+    return this.http.put(`${this.invitacionUrl}/${id}`, request);
   }
 
   eliminarInvitacion(id: number): Observable<any>{
-    return this.http.delete(`${this.invitaciones}/${id}`);
+    return this.http.delete(`${this.invitacionUrl}/${id}`);
   }
 
 }

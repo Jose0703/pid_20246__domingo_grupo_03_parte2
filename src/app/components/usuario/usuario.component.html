@@ -19,11 +19,146 @@
             </ul>
         </nav>
     </header>
+
     <main>
         <section>
-            <h2>Invitación</h2>
-            <p>Seleccione un apartado del menú para comenzar.</p>
+            <h2>Usuario</h2>
         </section>
+        <div class="container">
+            <div class="row">
+              
+            </div>
+              <div class="row p-5">
+                  <div class="col-12">
+                      <div class="row section-banner">
+                          <div class="col-6">
+                              <h2>Listado de Usuarios</h2>
+                          </div>
+                          <div class="col-6 btn-agregar" style="text-align: right;">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalUsuario" 
+                            (click)="titulo('Crear', null); resetForm()">
+                      Nuevo Usuario
+                            </button>
+                    
+                          </div>
+                      </div>
+                  </div>
+                  
+                  <div class="col-12">
+                    <br>
+                      <table class="table">
+                          <thead>
+                              <tr>
+                                  <th scope="col">#</th>
+                                  <th scope="col">Nombre</th>
+                                  <th scope="col">Apellido</th>
+                                  <th scope="col">Direccion</th>
+                                  <th scope="col">DNI</th>
+                                  <th></th>
+                                  <th scope="col">Email</th>
+                                  <th scope="col">Rol</th>
+                                  <th scope="col">Telefono</th>
+                                  <th scope="col">Editar</th>
+                                  <th scope="col">Eliminar</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let lista of listaUsuario; index as i">
+                                  <th scope="row">{{i+1}}</th>
+                                  <td>{{lista.nombre}}</td>
+                                  <td>{{lista.apellido}}</td>
+                                  <td>{{lista.direccion}}</td>
+                                  <td>{{lista.dni}}</td>
+                                  <td>{{lista.email}}</td>
+                                  <td>{{lista.password}}</td>
+                                  <td>{{lista.rol}}</td>
+                                  <td>{{lista.telefono}}</td>
+                                  <td>
+                                      <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                          data-bs-target="#modalUsuario" (click)="titulo('Editar', lista.id_usuario)">
+                                          Editar
+                                      </button>
+                                  </td>
+                                  <td>
+                                      <button class="btn btn-danger" (click)="eliminarTarea(lista.id_usuario)">Eliminar</button>
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          
+              <!-- Modal -->
+              <form [formGroup]="formUsuario">
+                  <div class="modal fade" id="modalUsuario">
+                      <div class="modal-dialog modal-dialog-centered modal-lg">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                  <h5 class="modal-title">{{title}}</h5>
+                                  <button type="button" class="btn-close" (click)="cerrarBoton()"></button>
+                              </div>
+                              <div class="modal-body">
+                                  <div class="row">
+                                      <div class="col-6">
+                                          <div class="form-floating mb-3">
+                                              <input type="text" class="form-control" placeholder="Nombre"
+                                                  formControlName="nombre" value="nombre" required>
+                                              <label for="nombre">Nombre</label>
+                                          </div>
+                                          <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" value="apellido" placeholder="Apellido"
+                                                formControlName="apellido" required>
+                                            <label for="apellido">Apellido</label>
+                                        </div>
+
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" placeholder="Direccion"
+                                                formControlName="direccion" value="direccion"  required >
+                                            <label for="direccion">Direccion</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" value="dni" placeholder="DNI"
+                                                formControlName="dni" required>
+                                            <label for="dni">DNI</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                          <input type="text" class="form-control" value="email" placeholder="Email"
+                                              formControlName="email" required>
+                                          <label for="email">Email</label>
+                                      </div>
+
+
+                                      <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" value="password" placeholder="Password"
+                                            formControlName="password" required>
+                                        <label for="password">Password</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                      <input type="text" class="form-control" value="rol" placeholder="Rol"
+                                          formControlName="rol" required>
+                                      <label for="rol">Rol</label>
+                                  </div>
+
+                                  <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" value="telefono" placeholder="Telefono"
+                                        formControlName="telefono" required>
+                                    <label for="telefono">Telefono</label>
+                                </div>
+                                    </div>
+        
+                                  </div>
+                              </div>
+                              <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" (click)="cerrarBoton()">Cerrar</button>
+                                  <button type="submit" class="btn btn-primary" (click)="registrarUsuario()">Guardar</button>
+                                </div>
+                          </div>
+                      </div>
+                  </div>
+              </form>
+          
+          </div>
+          
     </main>
 </body>
 </html>
