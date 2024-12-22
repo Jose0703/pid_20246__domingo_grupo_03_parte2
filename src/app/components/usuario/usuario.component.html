@@ -58,8 +58,7 @@
                                   <th scope="col">Email</th>
                                   <th scope="col">Rol</th>
                                   <th scope="col">Telefono</th>
-                                  <th scope="col">Editar</th>
-                                  <th scope="col">Eliminar</th>
+
                               </tr>
                           </thead>
                           <tbody>
@@ -74,14 +73,6 @@
                                   <td>{{lista.rol}}</td>
                                   <td>{{lista.telefono}}</td>
                                   <td>
-                                      <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                          data-bs-target="#modalUsuario" (click)="titulo('Editar', lista.id_usuario)">
-                                          Editar
-                                      </button>
-                                  </td>
-                                  <td>
-                                      <button class="btn btn-danger" (click)="eliminarTarea(lista.id_usuario)">Eliminar</button>
-                                  </td>
                               </tr>
                           </tbody>
                       </table>

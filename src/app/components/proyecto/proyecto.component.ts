@@ -75,31 +75,33 @@ export class ProyectoComponent implements OnInit {
       });
   }
 
-  eliminarProyectos(id: any) {
+  eliminarProyecto(id: any) {
       Swal.fire({
-        title: '¿Estás seguro de eliminar este proyecto?',
-        icon: 'error',
-        showCancelButton: true,
-        confirmButtonText: 'Sí, eliminar',
-        cancelButtonText: 'Cancelar'
+          title: '¿Estás seguro de eliminar este Proyecto?',
+          icon: 'error',
+          showCancelButton: true,
+          confirmButtonText: 'Sí, eliminar',
+          cancelButtonText: 'Cancelar'
       }).then((result) => {
-        if (result.isConfirmed) {
+          if (result.isConfirmed) {
+              this._proyectoserivce.eliminarProyecto(id)
+                  .subscribe(
+                      (data) => {
+                          console.log("Proyecto eliminado", data);
   
-          this._proyectoserivce.eliminarProyecto(id)
-            .subscribe((data) => {
-              console.log("Proyecto eliminado", data)
-              this.listaProyectos = this.listaProyectos.filter(item => item.id !== id);
-            }, error => {
-              console.error('Error al eliminar', error);
-            });
+                          // Filtra la tarea eliminada correctamente
+                          this.listaProyectos = this.listaProyectos.filter(item => item.id_proyecto !== id);
   
-            this.alertaExitosa("eliminado")
-  
-        }
+                          // Muestra la alerta de éxito
+                          this.alertaExitosa("eliminada");
+                      },
+                      error => {
+                          console.error('Error al eliminar', error);
+                      }
+                  );
+          }
       });
-  
-    }
-  
+  }
     registrarProyecto(formulario: any): void {
       if (this.formProyecto.valid) {
         const idUsuario = this._loginService.getIdUsuario(); // Obtener idUsuario dinámicamente

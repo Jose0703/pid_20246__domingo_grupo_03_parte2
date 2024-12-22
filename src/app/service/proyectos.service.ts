@@ -9,30 +9,29 @@ import { environment } from 'src/environments/environment';
 export class ProyectosService {
 
   private baseUrl = environment.apiUrl;
-
-  private proyectos: string = `${this.baseUrl}/proyecto`;
+  private proyectoUrl = `${this.baseUrl}/proyecto`;  // Solo una URL
 
   constructor(private http: HttpClient) { }
 
-  listarProyecto(): Observable<any>{
-    return this.http.get(`${this.proyectos}`);
+  listarProyecto(): Observable<any> {
+    return this.http.get(this.proyectoUrl);  // Usamos tareaUrl directamente
   }
 
   obtenerProyecto(id: number): Observable<any>{
-    return this.http.get(`${this.proyectos}/${id}`);
+    return this.http.get(`${this.proyectoUrl}/${id}`);
   }
 
-  registrarProyecto(request: any, idUsuario: number): Observable<any> {
-    return this.http.post(`${this.proyectos}?id_usuario=${idUsuario}`, request);
+  registrarProyecto(request: any, idProyecto: number): Observable<any> {
+    return this.http.post(`${this.proyectoUrl}?id_proyecto=${idProyecto}`, request);
   }
   
 
   editarProyecto(id: number, request: any): Observable<any>{
-    return this.http.put(`${this.proyectos}/${id}`, request);
+    return this.http.put(`${this.proyectoUrl}/${id}`, request);
   }
 
   eliminarProyecto(id: number): Observable<any>{
-    return this.http.delete(`${this.proyectos}/${id}`);
+    return this.http.delete(`${this.proyectoUrl}/${id}`);
   }
 
 }
