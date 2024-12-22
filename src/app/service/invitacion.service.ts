@@ -9,7 +9,6 @@ import { environment } from 'src/environments/environment';
 export class InvitacionService {
 
   private baseUrl = environment.apiUrl;
-
   private invitacionUrl = `${this.baseUrl}/invitacion`;  // Solo una URL
 
   constructor(private http: HttpClient) { }
@@ -22,10 +21,9 @@ export class InvitacionService {
     return this.http.get(`${this.invitacionUrl}/${id}`);
   }
 
-  registrarInvitacion(request: any, idInvitacion: number): Observable<any> {
-    return this.http.post(`${this.invitacionUrl}?id_invitacion=${idInvitacion}`, request);
+  registrarInvitacion(request: any, idUsuario: number): Observable<any> {
+    return this.http.post(`${this.invitacionUrl}?id_usuario=${idUsuario}`, request);
   }
-  
 
   editarInvitacion(id: number, request: any): Observable<any>{
     return this.http.put(`${this.invitacionUrl}/${id}`, request);

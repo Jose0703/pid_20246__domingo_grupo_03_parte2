@@ -86,59 +86,64 @@ export class InvitacionComponent implements OnInit {
         console.log(data.invitaciones)
       });
   }
-
+/*
   eliminarInvitacion(id: any) {
       Swal.fire({
-        title: '¿Estás seguro de eliminar esta invitacion?',
-        icon: 'error',
-        showCancelButton: true,
-        confirmButtonText: 'Sí, eliminar',
-        cancelButtonText: 'Cancelar'
+          title: '¿Estás seguro de eliminar esta tarea?',
+          icon: 'error',
+          showCancelButton: true,
+          confirmButtonText: 'Sí, eliminar',
+          cancelButtonText: 'Cancelar'
       }).then((result) => {
-        if (result.isConfirmed) {
+          if (result.isConfirmed) {
+              this._invitacionservice.eliminarInvitacion(id)
+                  .subscribe(
+                      (data) => {
+                          console.log("Tarea eliminada", data);
   
-          this._invitacionservice.eliminarInvitacion(id)
-            .subscribe((data) => {
-              console.log("Invitacion eliminada", data)
-              this.listaInvitaciones = this.listaInvitaciones.filter(item => item.id !== id);
-            }, error => {
-              console.error('Error al eliminar', error);
-            });
+                          // Filtra la tarea eliminada correctamente
+                          this.listaInvitaciones = this.listaInvitaciones.filter(item => item.id_invitacion !== id);
   
-            this.alertaExitosa("eliminado")
-  
-        }
+                          // Muestra la alerta de éxito
+                          this.alertaExitosa("eliminada");
+                      },
+                      error => {
+                          console.error('Error al eliminar', error);
+                      }
+                  );
+          }
       });
-  
-    }
-  
+  }
+  */
     registrarInvitacion(formulario: any): void {
       if (this.formInvitacion.valid) {
         const idUsuario = this._loginService.getIdUsuario(); // Obtener idUsuario dinámicamente
-    
+      
         // Crear el objeto request con los datos del formulario
         const request = {
-          nombre: formulario.value.nombre,
-          descripcion: formulario.value.descripcion
+          proyecto: formulario.value.proyecto,
+          usuario: formulario.value.usuario,
+          mensaje: formulario.value.mensaje
         };
-    
+      
         // Llamar al servicio con el id_usuario
         this._invitacionservice.registrarInvitacion(request, idUsuario).subscribe(
           (response) => {
-            console.log('Proyecto registrado', response);
+            console.log('Invitación registrada', response);
             this.cerrarModal();
             this.obtenerInvitaciones();
             this.resetForm();
           },
           (error) => {
             console.error('Error al registrar', error);
-            alert('Error al registrar la invitacion');
+            alert('Error al registrar la invitación');
           }
         );
       } else {
         console.warn('Formulario inválido');
       }
     }
+    
     
     
   

@@ -65,12 +65,12 @@
                                   <td>{{lista.nombreUsuario}}</td>
                                   <td>
                                       <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                          data-bs-target="#modalProyecto" (click)="titulo('Editar', lista.id)">
+                                          data-bs-target="#modalProyecto" (click)="titulo('Editar', lista.id_proyecto)">
                                           Editar
                                       </button>
                                   </td>
                                   <td>
-                                      <button class="btn btn-danger" (click)="eliminarProyectos(lista.id)">Eliminar</button>
+                                      <button class="btn btn-danger" (click)="eliminarProyecto(lista.id_proyecto)">Eliminar</button>
                                   </td>
                               </tr>
                           </tbody>

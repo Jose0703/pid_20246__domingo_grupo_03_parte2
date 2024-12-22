@@ -53,8 +53,8 @@
                                   <th scope="col">Proyecto</th>
                                   <th scope="col">Usuario</th>
                                   <th scope="col">Mensaje</th>
-                                  <th scope="col">Editar</th>
-                                  <th scope="col">Eliminar</th>
+                                  <!-- <th scope="col">Editar</th> -->
+                                  <!-- <th scope="col">Eliminar</th> -->
                               </tr>
                           </thead>
                           <tbody>
@@ -63,15 +63,15 @@
                                   <td>{{lista.proyecto}}</td>
                                   <td>{{lista.usuario}}</td>
                                   <td>{{lista.mensaje}}</td>
-                                  <td>
+                                  <!-- <td> 
                                       <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                          data-bs-target="#modalInvitacion" (click)="titulo('Editar', lista.id)">
+                                          data-bs-target="#modalInvitacion" (click)="titulo('Editar', lista.id_invitacion)">
                                           Editar
                                       </button>
                                   </td>
                                   <td>
-                                      <button class="btn btn-danger" (click)="eliminarInvitacion(lista.id)">Eliminar</button>
-                                  </td>
+                                      <button class="btn btn-danger" (click)="eliminarInvitacion(lista.id_invitacion)">Eliminar</button>
+                                  </td>-->
                               </tr>
                           </tbody>
                       </table>
